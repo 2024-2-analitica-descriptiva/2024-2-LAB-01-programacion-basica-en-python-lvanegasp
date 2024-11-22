@@ -7,6 +7,30 @@ utilizar pandas, numpy o scipy.
 
 
 def pregunta_07():
+    with open("files/input/data.csv", mode="r", newline="\n") as archivo:
+        lineas = archivo.readlines()
+
+    lineas = [linea.rstrip("\n") for linea in lineas]
+
+    tabla = [linea.split("\t") for linea in lineas]
+
+    diccionario_cantidad_registros: dict[int, list[int]] = {}
+
+    for registro in tabla:
+        cantidad = int(registro[1])
+        letra = registro[0]
+
+        if cantidad in diccionario_cantidad_registros.keys():
+            diccionario_cantidad_registros[cantidad].append(letra)
+        else:
+            diccionario_cantidad_registros[cantidad] = [letra]
+
+    lista_cantidad_registros = [
+        (key, valor) for key, valor in diccionario_cantidad_registros.items()
+    ]
+
+    return sorted(lista_cantidad_registros)
+
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
     contiene un valor posible de la columna 2 y una lista con todas las letras
